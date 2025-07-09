@@ -1,22 +1,30 @@
-import Image from "next/image";
-import Link from "next/link";
+"use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
 const Home = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    // Check if user is logged in
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      // User is logged in, redirect to dashboard
+      router.push('/dashboard');
+    } else {
+      // User is not logged in, redirect to login
+      router.push('/auth/login');
+    }
+  }, [router]);
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-bold mb-6 text-center"> Welcome to the Dealer Portal</h2>
-        
-        <p className="text-center text-gray-600">
-          Where you can manage your dealership's operations efficiently.
-        </p>
-        <div className="mt-6 flex justify-center">
-      <Link href="/auth/login" className="text-blue-500 hover:underline">
-        Login
-      </Link>
-      </div>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+        <p className="text-center text-gray-600">Redirecting...</p>
       </div>
     </div>
   );
-}
+};
 
 export default Home;
